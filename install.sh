@@ -25,9 +25,20 @@ set_default_shell() {
     chsh -s $(which zsh)
 }
 
+# Instalacja wtyczek do Oh My Zsh
+install_zsh_plugins() {
+    ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+    echo "Instaluję wtyczkę zsh-autosuggestions..."
+    if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-autosuggestions" ]; then
+        git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM}/plugins/zsh-autosuggestions"
+    else
+        echo "Wtyczka zsh-autosuggestions już jest zainstalowana."
+    fi
+}
+
 # Klonowanie repozytorium konfiguracyjnego
 clone_config_repo() {
-    REPO_URL="https://github.com/twoj-uzytkownik/dotfiles.git"
+    REPO_URL="https://github.com/jstefaniak99/Linux-configuration.git"
     CONFIG_DIR="$HOME/.config"
 
     if [ ! -d "$CONFIG_DIR" ]; then
@@ -42,6 +53,7 @@ clone_config_repo() {
 install_packages
 install_oh_my_zsh
 set_default_shell
+install_zsh_plugins
 clone_config_repo
 
 echo "Instalacja zakończona! Uruchom ponownie terminal, aby zastosować zmiany."
